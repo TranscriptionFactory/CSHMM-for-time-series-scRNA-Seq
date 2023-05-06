@@ -1,6 +1,6 @@
 import scdiff.scdiff as S
 
-def run_scdiff_init(data_file):
+def run_scdiff_init(data_file, tfdna, kc):
     E=S.TabFile(data_file).read('\t')
     #print E[0][:3]
     #global GL # Gene list global variable
@@ -18,7 +18,7 @@ def run_scdiff_init(data_file):
             ei=[float(item) for item in i[3:]] # expression for cell i
             ci=S.Cell(iid,ti,ei,li, S.GL) # cell i
             AllCells.append(ci)
-    G1=S.Graph(AllCells,'auto',None)  #Cells: List of Cell instances 
+    G1=S.Graph(AllCells,tfdna, kc)  #Cells: List of Cell instances 
     out_file = open('init_cluster_'+data_file+'.txt','w')
     pairs=[]
     pairs2=[]
