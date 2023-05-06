@@ -1,5 +1,5 @@
 import scdiff.scdiff as S
-
+import pickle
 def run_scdiff_init(data_file, tfdna, kc):
     E=S.TabFile(data_file).read('\t')
     #print E[0][:3]
@@ -18,8 +18,9 @@ def run_scdiff_init(data_file, tfdna, kc):
             ei=[float(item) for item in i[3:]] # expression for cell i
             ci=S.Cell(iid,ti,ei,li, S.GL) # cell i
             AllCells.append(ci)
+    pickle.dump(AllCells, open(data_file+'allcells.txt', "wb"))
     G1=S.Graph(AllCells,tfdna, kc)  #Cells: List of Cell instances 
-    out_file = open('init_cluster_'+data_file+'.txt','w')
+    out_file = open(data_file+'init_cluster.txt','w')
     pairs=[]
     pairs2=[]
     print 'G1'
