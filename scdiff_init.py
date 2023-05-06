@@ -1,4 +1,5 @@
 import scdiff.scdiff as S
+
 def run_scdiff_init(data_file):
     E=S.TabFile(data_file).read('\t')
     #print E[0][:3]
@@ -15,7 +16,7 @@ def run_scdiff_init(data_file):
             ti=float(i[1])     # time point for cell i
             li=i[2]
             ei=[float(item) for item in i[3:]] # expression for cell i
-            ci=S.Cell(iid,ti,ei,li) # cell i
+            ci=S.Cell(iid,ti,ei,li, S.GL) # cell i
             AllCells.append(ci)
     G1=S.Graph(AllCells,'auto',None)  #Cells: List of Cell instances 
     out_file = open('init_cluster_'+data_file+'.txt','w')
