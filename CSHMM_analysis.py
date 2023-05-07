@@ -507,12 +507,14 @@ def analyze_gene(model_file,data_file=None,ng=16000,model_ana_temp=None,out_fold
         neg_genes=gene_names[neg_s_sort_idx[:n_top]]
         mk_gene_dict = marker_genes_dict
         mk_gene_list = marker_gene_list
-        if splits[1].split('-')[0]=='treutlein2014':
-            mk_gene_dict = treutlein2014_mkgene_dict
-            mk_gene_list = treutlein2014_mkgene
-        if splits[1].split('-')[0]=='treutlein2016':
-            mk_gene_dict = treutlein2016_mkgene_dict
-            mk_gene_list = treutlein2016_mkgene
+
+# this should not be hardcoded into analysis functions         
+#         if splits[1].split('-')[0]=='treutlein2014':
+#             mk_gene_dict = treutlein2014_mkgene_dict
+#             mk_gene_list = treutlein2014_mkgene
+#         if splits[1].split('-')[0]=='treutlein2016':
+#             mk_gene_dict = treutlein2016_mkgene_dict
+#             mk_gene_list = treutlein2016_mkgene
         for index, srt_idx in enumerate(pos_s_sort_idx[:n_top]):
             logging.debug('positive rank: ',index, gene_names[srt_idx], np.around(fp_g_scor[srt_idx],2),mk_gene_dict[gene_names[srt_idx]])
             #print 'positive rank: ',index, gene_names[srt_idx], np.around(fp_g_scor[srt_idx],2),mk_gene_dict[gene_names[srt_idx]]
@@ -542,35 +544,34 @@ def analyze_gene(model_file,data_file=None,ng=16000,model_ana_temp=None,out_fold
     model_ana_temp['hid_var']=hid_var
     model_ana_temp['out_folder']=out_folder
     return model_ana_temp
+
 def analyze_path_difference(model_ana_temp,path1,path2,append=""):
     #analyze AT1/AT2 diff gene here, path (5,4) and (7,4)
-    global treutlein2014_mkgene
-    global treutlein2014_mkgene_dict
+#     global treutlein2014_mkgene
+#     global treutlein2014_mkgene_dict
+    global marker_genes_dict
+    global marker_genes_list
     print path1
     print path2
-    #p_gt_dict=model_ana_temp['p_gt_dict']
-    #p_ge_dict=model_ana_temp['p_ge_dict']
+
     path_scor_dict=model_ana_temp['path_scor_dict']
     #full_ts_es_dict=model_ana_temp['full_ts_es_dict']
     gene_names=model_ana_temp['gene_names']
     out_folder = model_ana_temp['out_folder']
 
-    #AT1_path = (7,4)
-    #AT2_path = (5,4)
+
     abs_scor_diff=np.fabs([path_scor_dict[path1[1]][x]-path_scor_dict[path2[1]][x] for x in range(len(gene_names))])
     #print abs_scor_diff.shape
     srt_index = np.argsort(-abs_scor_diff)
     ntop = 300
     #cutoff = 0.75
     cut_ntop=20
-    #print abs_scor_diff[abs_scor_diff>cutoff].shape
-    #discovered_marker = []
-    #discovered_marker_gene_dict=defaultdict(lambda:"")
+
     for i,(abs_scor,gene) in enumerate(zip(abs_scor_diff[srt_index],gene_names[srt_index])[:ntop]):
         if i < print_top_limit:
-            print abs_scor, gene, treutlein2014_mkgene_dict[gene]
+            print abs_scor, gene, mkgene_dict[gene]
         else:
-            logging.debug(str(abs_scor)+" "+ gene +" "+ str(treutlein2014_mkgene_dict[gene]))
+            logging.debug(str(abs_scor)+" "+ gene +" "+ str(mkgene_dict[gene]))
         #print abs_scor, gene, marker_genes_dict[gene]
         #if abs_scor>cutoff:
         if i<20:
@@ -817,17 +818,18 @@ def plot_cont_marker_gexp(model_ana_temp,remove_path,rescale=True):
         #plt2.clf()
         #plt3.clf()
         #plt4.clf()
-def analyze_model(model_file,dataset='treutlein2014',append="",model_ana_temp=None):
-    model_ana_temp=analyze_gene('model/'+model_file,model_ana_temp=model_ana_temp)
-    plot_path_fig('model/'+model_file)
-    if dataset=='treutlein2014':
-        model_ana_temp = analyze_path_difference(model_ana_temp,('AT1',(7,4)),('AT2',(5,4)),append)
-        model_ana_temp = analyze_path_difference(model_ana_temp,('ciliated',tuple([2,0])),('Clara',tuple([3,0])),append)
-        plot_cont_marker_gexp(model_ana_temp,remove_path=tuple([6,1,0]))
-    if dataset=='treutlein2016-2':
-        model_ana_temp = analyze_path_difference(model_ana_temp,('Neuron',(8,6)),('d5_failed_intermediate',tuple([4,])),append)
-        #model_ana_temp = analyze_path_difference(model_ana_temp,('ciliated',tuple([2,0])),('Clara',tuple([3,0])))
-        plot_cont_marker_gexp(model_ana_temp,remove_path=tuple([3,1,0]))
+
+# def analyze_model(model_file,dataset='treutlein2014',append="",model_ana_temp=None):
+#     model_ana_temp=analyze_gene('model/'+model_file,model_ana_temp=model_ana_temp)
+#     plot_path_fig('model/'+model_file)
+#     if dataset=='treutlein2014':
+#         model_ana_temp = analyze_path_difference(model_ana_temp,('AT1',(7,4)),('AT2',(5,4)),append)
+#         model_ana_temp = analyze_path_difference(model_ana_temp,('ciliated',tuple([2,0])),('Clara',tuple([3,0])),append)
+#         plot_cont_marker_gexp(model_ana_temp,remove_path=tuple([6,1,0]))
+#     if dataset=='treutlein2016-2':
+#         model_ana_temp = analyze_path_difference(model_ana_temp,('Neuron',(8,6)),('d5_failed_intermediate',tuple([4,])),append)
+#         #model_ana_temp = analyze_path_difference(model_ana_temp,('ciliated',tuple([2,0])),('Clara',tuple([3,0])))
+#         plot_cont_marker_gexp(model_ana_temp,remove_path=tuple([3,1,0]))
     
     
-    return model_ana_temp
+#     return model_ana_temp
