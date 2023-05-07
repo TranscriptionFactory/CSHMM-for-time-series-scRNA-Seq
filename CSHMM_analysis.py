@@ -27,130 +27,145 @@ def dictlambda():
     return []
 
 def init_marker_gene_dict():
-
+    
+    dict_data = pd.read_csv('marker_dict_data.csv', sep = "\t")
+    
     marker_genes_dict=defaultdict(lambda: ("",""))
 
-    #treutlein 2014
-    marker_genes_dict['Abca3'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Sftpb'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Muc1'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Kyz2'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Sftpc'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Aqp5'] = ('AT1','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Pdpn'] = ('AT1','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Ager'] = ('AT1','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Foxj1'] = ('ciliated','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Scgb1a1'] = ('Clara','treutlein2014: alveolar/bronchiolar lineages')
-    marker_genes_dict['Cftr'] = ('AT2','treutlein2014: novel')
-    marker_genes_dict['Cebpa'] = ('AT2','treutlein2014: novel')
-    marker_genes_dict['Sftpd'] = ('AT2','treutlein2014: novel')
-    marker_genes_dict['Id2'] = ('AT2','treutlein2014: novel')
-    marker_genes_dict['Begfa'] = ('AT1','treutlein2014: novel')
-    marker_genes_dict['Itgb4'] = ('ciliated','treutlein2014: novel')
-    marker_genes_dict['Top2a'] = ('ciliated','treutlein2014: novel')
+    
+    for i in range(len(dict_data)):
+        dfsubset = dict_data.iloc[i]
+        marker_genes_dict[dfsubset['gene']] = dfsubset['bigstage']
+    
+    return marker_genes_dict.keys(), marker_genes_dict
 
-    #sabrina TASIC
-    marker_genes_dict['Gabpb1'] = ('DEgenes','sabrina TASIC: t-test/Scell')
-    marker_genes_dict['Rars2'] = ('DEgenes','sabrina TASIC: t-test/Scell')
-    marker_genes_dict['Naa50'] = ('DEgenes','sabrina TASIC: t-test/Scell')
-    marker_genes_dict['Jund'] = ('DEgenes','sabrina TASIC: t-test/Scell')
-    marker_genes_dict['Myo1b'] = ('DEgenes','sabrina TASIC: t-test/Scell')
-    marker_genes_dict['Adamfs10'] = ('DEgenes','sabrina TASIC: t-test')
-    marker_genes_dict['Foxa2'] = ('DEgenes','sabrina TASIC: t-test/Scell')
-    marker_genes_dict['Ppp3r1'] = ('DEgenes','sabrina TASIC: t-test')
-    marker_genes_dict['Cdk4'] = ('DEgenes','sabrina TASIC: t-test/Scell')
-    marker_genes_dict['Nasp'] = ('DEgenes','sabrina TASIC: t-test/')
-    marker_genes_dict['Dlk1'] = ('DEgenes','sabrina TASIC: Scell')
-    marker_genes_dict['Hmgb2'] = ('DEgenes','sabrina TASIC: Scell')
-    marker_genes_dict['Cdc6'] = ('DEgenes','sabrina TASIC: Scell')
+# def init_marker_gene_dict():
 
-    marker_genes_dict['Birc5'] = ('mitosis','treutlein2016: , main text')
-    marker_genes_dict['Ube2c'] = ('mitosis','treutlein2016: , main text')
-    # marker_genes_dict['Hmga2'] = ('mitosis','treutlein2016: , main text)
-    marker_genes_dict['Cadm1'] = ('neural_projections','treutlein2016: , main text')
-    # marker_genes_dict['Dner'] = ('neural projections','treutlein2016: , main text)
-    marker_genes_dict['Klhl24'] = ('neural_projections','treutlein2016: , main text')
-    # marker_genes_dict['Tubb3'] = ('neural projections','treutlein2016: , main text)
-    marker_genes_dict['Mapt'] = ('neural_projections','treutlein2016: , main text')                             
-    # marker_genes_dict['Snca'] = ('synaptic transmission','treutlein2016: , main text)
-    marker_genes_dict['Stxbp1'] = ('synaptic_transmission','treutlein2016: , main text')
-    marker_genes_dict['Vamp2'] = ('synaptic_transmission','treutlein2016: , main text')
-    marker_genes_dict['Dmpk'] = ('synaptic_transmission','treutlein2016: , main text')
-    marker_genes_dict['Ppp3ca'] = ('synaptic_transmission','treutlein2016: , main text')                              
-    marker_genes_dict['Sept3'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
-    marker_genes_dict['Sept4'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
-    marker_genes_dict['Coro2b'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
-    marker_genes_dict['Ank2'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
-    marker_genes_dict['Mtap1a'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
-    marker_genes_dict['Homer2'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
-    marker_genes_dict['Akap9'] = ('cytoskeletal_reorganization','treutlein2016: , main text')                             
-    marker_genes_dict['Ascl1'] = ('Ascl1_target|initial_factor','treutlein2016: Extend Data Figure 3b, 8c')
-    marker_genes_dict['Hes6'] = ('Ascl1_target|initial_factor','treutlein2016: Extend Data Figure 3b, 8c')
-    marker_genes_dict['Zfp238'] = ('Ascl1_target|initial_factor','treutlein2016: Extend Data Figure 3b, 8c')
-    marker_genes_dict['Snca'] = ('Ascl1_target|synaptic_transmission','treutlein2016: Extend Data Figure 3b , main text')
-    marker_genes_dict['Cox8b'] = ('Ascl1_target','treutlein2016: Extend Data Figure 3b')
-    marker_genes_dict['Bex1'] = ('Ascl1_target','treutlein2016: Extend Data Figure 3b')
-    marker_genes_dict['Dner'] = ('Ascl1_target|neural_projections','treutlein2016: Extend Data Figure 3b, main text')
-    marker_genes_dict['Atoh8'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')
-    marker_genes_dict['Sox9'] = ('initial_factor|NPC','treutlein2016: Extend Data Figure 8c,main text')
-    marker_genes_dict['Tcf4'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')
-    marker_genes_dict['Sox11'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')
-    marker_genes_dict['Tcf12'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')
-    marker_genes_dict['Dlx3'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')                        
-    marker_genes_dict['Ecm1'] = ('MEF','treutlein2016: Extend Data Figure 3b')
-    marker_genes_dict['Scd1'] = ('MEF','treutlein2016: Extend Data Figure 3b')
-    marker_genes_dict['Dcn'] = ('MEF|Fibroblast','treutlein2016: Extend Data Figure 3b,6i')                         
-    marker_genes_dict['Hmga2'] = ('MEF_factors|mitosis','treutlein2016: Extend Data Figure 8e, main text')
-    marker_genes_dict['Id3'] = ('MEF_factors','treutlein2016: Extend Data Figure 8e')                            
-    marker_genes_dict['Myh3'] = ('Myocyte','treutlein2016: Extend Data Figure 6g')
-    marker_genes_dict['Myo18b'] = ('Myocyte','treutlein2016: Extend Data Figure 6g')
-    marker_genes_dict['Tnnc2'] = ('Myocyte','treutlein2016: Extend Data Figure 6g, main text')
-    marker_genes_dict['Acta1'] = ('Myocyte','treutlein2016: Extend Data Figure 6g')                            
-    marker_genes_dict['Map2'] = ('Neuron|pan-neuronal','treutlein2016: Extend Data Figure 6h,main text')                           
-    marker_genes_dict['Syp'] = ('Neuron|synaptic_maturation','treutlein2016: main text')
-    marker_genes_dict['Gria2'] = ('Neuron|synaptic|synaptic_maturation','treutlein2016: Extend Data Figure 6h, main text')
-    marker_genes_dict['Snap25'] = ('Neuron|synaptic|synaptic_maturation','treutlein2016: Extend Data Figure 6h, main text')
-    marker_genes_dict['Tubb3'] = ('Neuron|pan-neuronal|neural_projections','treutlein2016: Extend Data Figure 6h, main text')
-    marker_genes_dict['Nrxn3'] = ('Neuron|synaptic|synaptic_maturation','treutlein2016: Extend Data Figure 6h, main text')
-    marker_genes_dict['Stmn3'] = ('Neuron|synaptic','treutlein2016: Extend Data Figure 6h, main text')
-    marker_genes_dict['Rab3c'] = ('synaptic_maturation','treutlein2016: main text')
-    marker_genes_dict['Syt4'] = ('synaptic_maturation','treutlein2016: main text')
-    marker_genes_dict['Sv2a'] = ('synaptic_maturation','treutlein2016: main text')
-    # marker_genes_dict['Map2'] = ('pan-neuronal','treutlein2016: main text)
-    # genes involved in synaptic maturation are turned on (Syp, Rab3c, Gria2, Syt4, Nrxn3, Snap25, Sv2a)                          
-    marker_genes_dict['Camta1'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
-    marker_genes_dict['Insm1'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
-    marker_genes_dict['Myt1l'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
-    marker_genes_dict['St18'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
-    marker_genes_dict['Peg3'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
-    marker_genes_dict['Gli3'] = ('NPC','treutlein2016: main text')
-    # marker_genes_dict['Sox9'] = ('NPC','treutlein2016: main text)
-    marker_genes_dict['Nestin'] = ('NPC','treutlein2016: main text')
-    marker_genes_dict['Fabp7'] = ('NPC','treutlein2016: main text')
-    marker_genes_dict['Hes1'] = ('NPC','treutlein2016: main text')
-    marker_genes_dict['Sox2'] = ('canonical_NPC','treutlein2016: main text')
-    marker_genes_dict['Pax6'] = ('canonical_NPC','treutlein2016: main text')                            
-    marker_genes_dict['Col1a2'] = ('Fibroblast','treutlein2016: Extend Data Figure 6i')
-    # marker_genes_dict['Dcn'] = ('Fibroblast','treutlein2016: Extend Data Figure 6i)                           
-    marker_genes_dict['Eln'] = ('Fibroblast','treutlein2016: main text')
+#     # load pickled dict
+#     with open('
+#     marker_genes_dict=defaultdict(lambda: ("",""))
+
+#     #treutlein 2014
+#     marker_genes_dict['Abca3'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Sftpb'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Muc1'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Kyz2'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Sftpc'] = ('AT2','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Aqp5'] = ('AT1','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Pdpn'] = ('AT1','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Ager'] = ('AT1','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Foxj1'] = ('ciliated','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Scgb1a1'] = ('Clara','treutlein2014: alveolar/bronchiolar lineages')
+#     marker_genes_dict['Cftr'] = ('AT2','treutlein2014: novel')
+#     marker_genes_dict['Cebpa'] = ('AT2','treutlein2014: novel')
+#     marker_genes_dict['Sftpd'] = ('AT2','treutlein2014: novel')
+#     marker_genes_dict['Id2'] = ('AT2','treutlein2014: novel')
+#     marker_genes_dict['Begfa'] = ('AT1','treutlein2014: novel')
+#     marker_genes_dict['Itgb4'] = ('ciliated','treutlein2014: novel')
+#     marker_genes_dict['Top2a'] = ('ciliated','treutlein2014: novel')
+
+#     #sabrina TASIC
+#     marker_genes_dict['Gabpb1'] = ('DEgenes','sabrina TASIC: t-test/Scell')
+#     marker_genes_dict['Rars2'] = ('DEgenes','sabrina TASIC: t-test/Scell')
+#     marker_genes_dict['Naa50'] = ('DEgenes','sabrina TASIC: t-test/Scell')
+#     marker_genes_dict['Jund'] = ('DEgenes','sabrina TASIC: t-test/Scell')
+#     marker_genes_dict['Myo1b'] = ('DEgenes','sabrina TASIC: t-test/Scell')
+#     marker_genes_dict['Adamfs10'] = ('DEgenes','sabrina TASIC: t-test')
+#     marker_genes_dict['Foxa2'] = ('DEgenes','sabrina TASIC: t-test/Scell')
+#     marker_genes_dict['Ppp3r1'] = ('DEgenes','sabrina TASIC: t-test')
+#     marker_genes_dict['Cdk4'] = ('DEgenes','sabrina TASIC: t-test/Scell')
+#     marker_genes_dict['Nasp'] = ('DEgenes','sabrina TASIC: t-test/')
+#     marker_genes_dict['Dlk1'] = ('DEgenes','sabrina TASIC: Scell')
+#     marker_genes_dict['Hmgb2'] = ('DEgenes','sabrina TASIC: Scell')
+#     marker_genes_dict['Cdc6'] = ('DEgenes','sabrina TASIC: Scell')
+
+#     marker_genes_dict['Birc5'] = ('mitosis','treutlein2016: , main text')
+#     marker_genes_dict['Ube2c'] = ('mitosis','treutlein2016: , main text')
+#     # marker_genes_dict['Hmga2'] = ('mitosis','treutlein2016: , main text)
+#     marker_genes_dict['Cadm1'] = ('neural_projections','treutlein2016: , main text')
+#     # marker_genes_dict['Dner'] = ('neural projections','treutlein2016: , main text)
+#     marker_genes_dict['Klhl24'] = ('neural_projections','treutlein2016: , main text')
+#     # marker_genes_dict['Tubb3'] = ('neural projections','treutlein2016: , main text)
+#     marker_genes_dict['Mapt'] = ('neural_projections','treutlein2016: , main text')                             
+#     # marker_genes_dict['Snca'] = ('synaptic transmission','treutlein2016: , main text)
+#     marker_genes_dict['Stxbp1'] = ('synaptic_transmission','treutlein2016: , main text')
+#     marker_genes_dict['Vamp2'] = ('synaptic_transmission','treutlein2016: , main text')
+#     marker_genes_dict['Dmpk'] = ('synaptic_transmission','treutlein2016: , main text')
+#     marker_genes_dict['Ppp3ca'] = ('synaptic_transmission','treutlein2016: , main text')                              
+#     marker_genes_dict['Sept3'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
+#     marker_genes_dict['Sept4'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
+#     marker_genes_dict['Coro2b'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
+#     marker_genes_dict['Ank2'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
+#     marker_genes_dict['Mtap1a'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
+#     marker_genes_dict['Homer2'] = ('cytoskeletal_reorganization','treutlein2016: , main text')
+#     marker_genes_dict['Akap9'] = ('cytoskeletal_reorganization','treutlein2016: , main text')                             
+#     marker_genes_dict['Ascl1'] = ('Ascl1_target|initial_factor','treutlein2016: Extend Data Figure 3b, 8c')
+#     marker_genes_dict['Hes6'] = ('Ascl1_target|initial_factor','treutlein2016: Extend Data Figure 3b, 8c')
+#     marker_genes_dict['Zfp238'] = ('Ascl1_target|initial_factor','treutlein2016: Extend Data Figure 3b, 8c')
+#     marker_genes_dict['Snca'] = ('Ascl1_target|synaptic_transmission','treutlein2016: Extend Data Figure 3b , main text')
+#     marker_genes_dict['Cox8b'] = ('Ascl1_target','treutlein2016: Extend Data Figure 3b')
+#     marker_genes_dict['Bex1'] = ('Ascl1_target','treutlein2016: Extend Data Figure 3b')
+#     marker_genes_dict['Dner'] = ('Ascl1_target|neural_projections','treutlein2016: Extend Data Figure 3b, main text')
+#     marker_genes_dict['Atoh8'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')
+#     marker_genes_dict['Sox9'] = ('initial_factor|NPC','treutlein2016: Extend Data Figure 8c,main text')
+#     marker_genes_dict['Tcf4'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')
+#     marker_genes_dict['Sox11'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')
+#     marker_genes_dict['Tcf12'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')
+#     marker_genes_dict['Dlx3'] = ('initial_factor','treutlein2016: Extend Data Figure 8c')                        
+#     marker_genes_dict['Ecm1'] = ('MEF','treutlein2016: Extend Data Figure 3b')
+#     marker_genes_dict['Scd1'] = ('MEF','treutlein2016: Extend Data Figure 3b')
+#     marker_genes_dict['Dcn'] = ('MEF|Fibroblast','treutlein2016: Extend Data Figure 3b,6i')                         
+#     marker_genes_dict['Hmga2'] = ('MEF_factors|mitosis','treutlein2016: Extend Data Figure 8e, main text')
+#     marker_genes_dict['Id3'] = ('MEF_factors','treutlein2016: Extend Data Figure 8e')                            
+#     marker_genes_dict['Myh3'] = ('Myocyte','treutlein2016: Extend Data Figure 6g')
+#     marker_genes_dict['Myo18b'] = ('Myocyte','treutlein2016: Extend Data Figure 6g')
+#     marker_genes_dict['Tnnc2'] = ('Myocyte','treutlein2016: Extend Data Figure 6g, main text')
+#     marker_genes_dict['Acta1'] = ('Myocyte','treutlein2016: Extend Data Figure 6g')                            
+#     marker_genes_dict['Map2'] = ('Neuron|pan-neuronal','treutlein2016: Extend Data Figure 6h,main text')                           
+#     marker_genes_dict['Syp'] = ('Neuron|synaptic_maturation','treutlein2016: main text')
+#     marker_genes_dict['Gria2'] = ('Neuron|synaptic|synaptic_maturation','treutlein2016: Extend Data Figure 6h, main text')
+#     marker_genes_dict['Snap25'] = ('Neuron|synaptic|synaptic_maturation','treutlein2016: Extend Data Figure 6h, main text')
+#     marker_genes_dict['Tubb3'] = ('Neuron|pan-neuronal|neural_projections','treutlein2016: Extend Data Figure 6h, main text')
+#     marker_genes_dict['Nrxn3'] = ('Neuron|synaptic|synaptic_maturation','treutlein2016: Extend Data Figure 6h, main text')
+#     marker_genes_dict['Stmn3'] = ('Neuron|synaptic','treutlein2016: Extend Data Figure 6h, main text')
+#     marker_genes_dict['Rab3c'] = ('synaptic_maturation','treutlein2016: main text')
+#     marker_genes_dict['Syt4'] = ('synaptic_maturation','treutlein2016: main text')
+#     marker_genes_dict['Sv2a'] = ('synaptic_maturation','treutlein2016: main text')
+#     # marker_genes_dict['Map2'] = ('pan-neuronal','treutlein2016: main text)
+#     # genes involved in synaptic maturation are turned on (Syp, Rab3c, Gria2, Syt4, Nrxn3, Snap25, Sv2a)                          
+#     marker_genes_dict['Camta1'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
+#     marker_genes_dict['Insm1'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
+#     marker_genes_dict['Myt1l'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
+#     marker_genes_dict['St18'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
+#     marker_genes_dict['Peg3'] = ('Neuron','treutlein2016: Extend Data Figure 8d')
+#     marker_genes_dict['Gli3'] = ('NPC','treutlein2016: main text')
+#     # marker_genes_dict['Sox9'] = ('NPC','treutlein2016: main text)
+#     marker_genes_dict['Nestin'] = ('NPC','treutlein2016: main text')
+#     marker_genes_dict['Fabp7'] = ('NPC','treutlein2016: main text')
+#     marker_genes_dict['Hes1'] = ('NPC','treutlein2016: main text')
+#     marker_genes_dict['Sox2'] = ('canonical_NPC','treutlein2016: main text')
+#     marker_genes_dict['Pax6'] = ('canonical_NPC','treutlein2016: main text')                            
+#     marker_genes_dict['Col1a2'] = ('Fibroblast','treutlein2016: Extend Data Figure 6i')
+#     # marker_genes_dict['Dcn'] = ('Fibroblast','treutlein2016: Extend Data Figure 6i)                           
+#     marker_genes_dict['Eln'] = ('Fibroblast','treutlein2016: main text')
     
     
-    marker_gene_list = marker_genes_dict.keys()
-    treutlein2014_mkgene = []
-    treutlein2014_mkgene_dict=defaultdict(lambda: ("",""))
-    treutlein2016_mkgene = []
-    treutlein2016_mkgene_dict=defaultdict(lambda: ("",""))
-    for key, val in marker_genes_dict.items():
-        if val[1].split(':')[0]=='treutlein2014':
-            treutlein2014_mkgene+=[key]
-            treutlein2014_mkgene_dict[key] = val
-        if val[1].split(':')[0]=='treutlein2016':
-            treutlein2016_mkgene+=[key]
-            treutlein2016_mkgene_dict[key] = val
-    print treutlein2014_mkgene
-    print treutlein2016_mkgene
-    print len(treutlein2016_mkgene)
-    return marker_gene_list,marker_genes_dict,treutlein2014_mkgene,treutlein2014_mkgene_dict,treutlein2016_mkgene,treutlein2016_mkgene_dict
+#     marker_gene_list = marker_genes_dict.keys()
+#     treutlein2014_mkgene = []
+#     treutlein2014_mkgene_dict=defaultdict(lambda: ("",""))
+#     treutlein2016_mkgene = []
+#     treutlein2016_mkgene_dict=defaultdict(lambda: ("",""))
+#     for key, val in marker_genes_dict.items():
+#         if val[1].split(':')[0]=='treutlein2014':
+#             treutlein2014_mkgene+=[key]
+#             treutlein2014_mkgene_dict[key] = val
+#         if val[1].split(':')[0]=='treutlein2016':
+#             treutlein2016_mkgene+=[key]
+#             treutlein2016_mkgene_dict[key] = val
+#     print treutlein2014_mkgene
+#     print treutlein2016_mkgene
+#     print len(treutlein2016_mkgene)
+#     return marker_gene_list,marker_genes_dict,treutlein2014_mkgene,treutlein2014_mkgene_dict,treutlein2016_mkgene,treutlein2016_mkgene_dict
 
 
 def get_graphviz_plain_node_xy(filename):
