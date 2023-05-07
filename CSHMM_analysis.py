@@ -551,6 +551,7 @@ def analyze_path_difference(model_ana_temp,path1,path2,append=""):
 #     global treutlein2014_mkgene_dict
     global marker_genes_dict
     global marker_genes_list
+    global mkgene_dict
     print path1
     print path2
 
