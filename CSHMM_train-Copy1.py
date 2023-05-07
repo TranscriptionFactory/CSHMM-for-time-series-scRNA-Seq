@@ -14,10 +14,6 @@ import pickle
 import multiprocessing as mp
 import sys
 import copy
-
-def dictlambda():
-    return []
-
 def load_data_2(file_name,max_gene):
     print 'loading data......'
     lines=open(file_name).readlines()
@@ -104,7 +100,7 @@ def init_var_Jun(init_file,cell_names,cell_times,cell_exps,cell_labels):
     adj_mat=np.zeros((n_state,n_state))
     adj_mat[0,1]=1
     for i in range(n_path):
-        path_info.append(defaultdict(dictlambda))
+        path_info.append(defaultdict(lambda:[]))
     path_info[0]['Sp_idx']=0
     path_info[0]['level']=0
     for i in range(n_path):
@@ -153,8 +149,8 @@ def save_model(file_name,model,hid_var):
     print 'saving model to file: ',file_name
     with open(file_name, 'wb') as handle:
         out_dict={}
-        out_dict['model']= model
-        out_dict['hid_var']= hid_var
+        out_dict['model']= copy.deepcopy(model)
+        out_dict['hid_var']= copy.deepcopy(hid_var)
         pickle.dump(out_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 def load_model(file_name):
     print 'loading model from file: ',file_name
@@ -319,7 +315,7 @@ def assign_path_and_time(model,hid_var,cell_exps):
     cell_time=hid_var['cell_time']
     cell_ori_time=hid_var['cell_ori_time']
     if n_anchor:
-        anchor=defaultdict(lambda:defaultdict(dictlambda))
+        anchor=defaultdict(lambda:defaultdict(lambda:[]))
         for i in range(n_cell):
             p=cell_path[i]
             t=cell_time[i]
@@ -570,7 +566,8 @@ def path_distance(pa,pb,cell_exps,cell_path):
     pb_center = np.average(cell_exps[cell_path==pb],axis=0)
     return 1-spearmanr(pa_center,pb_center)[0]
 
-
+def dictlambda():
+    return []
 
 def adjust_model_structure(model,hid_var,cell_exps):
     print 'adjusting model structure '
@@ -580,7 +577,7 @@ def adjust_model_structure(model,hid_var,cell_exps):
     n_path=len(path_info)
     valid_parent=sorted(list(set(np.unique(hid_var['cell_path']).tolist())))
     
-    level_path=defaultdict(dictlambda)#defaultdict(dictlambda)
+    level_path=defaultdict(dictlambda)#defaultdict(lambda:[])
     for i,p in enumerate(path_info):
         p['child_path']=[]
         if i not in valid_parent:
@@ -664,7 +661,7 @@ def optimize_likelihood(cell_exps, model, hid_var, model_name, store_model=True)
             print 'path assignment the same as previous iteration, stop training.'
         #if out_it % 10 ==0:
         if store_model:
-            save_model(model_name+'_it'+str(out_it)+'.pickle', model, hid_var)
+            save_model(model_name+'_it'+str(out_it)+'.pickle', copy.deepcopy(model), copy.deepcopy(hid_var))
             #model,hid_var=load_model(model_name)
            
         sys.stdout.flush()
