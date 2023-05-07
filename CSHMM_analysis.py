@@ -23,6 +23,9 @@ if debug:
     logging.basicConfig(level=logging.DEBUG)
 print_top_limit=20
 
+def dictlambda():
+    return []
+
 def init_marker_gene_dict():
 
     marker_genes_dict=defaultdict(lambda: ("",""))
@@ -357,7 +360,7 @@ def GO_ana_gene_list(gene_list,out_file):
     #print cmd
     logging.debug(cmd)
     os.system(cmd)
-    cmd = 'python ~/repos/bio_packages/gprofiler-official-0.2.3/gprofiler.py -o mmusculus "'+ ' '.join(gene_list) + '" >> '+out_file
+    cmd = 'python ~/.conda/envs/cshmm/bin/gprofiler.py -o mmusculus "'+ ' '.join(gene_list) + '" >> '+out_file
     #print cmd
     logging.debug(cmd)
     os.system(cmd)
